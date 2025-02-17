@@ -1,7 +1,6 @@
 # s25-bootcamp-weatherapp
 
-A modern **SwiftUI-based Weather App** that provides **hourly** and **10-day forecasts** with a sleek UI.  
-This project demonstrates the use of **SwiftUI**, **dynamic weather icons**, and **gradient backgrounds** to create a beautiful weather experience.
+A modern **SwiftUI-based Weather App** that provides **hourly** and **10-day forecasts** with a sleek UI.
 
 <p align="center">
   <img src="screenshots/app.png" alt="App Screenshot" width="500">
