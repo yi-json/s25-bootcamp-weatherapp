@@ -16,16 +16,16 @@ struct WeeklyForecastView: View {
     var body: some View {
         HStack {
             Text(day)
-                .frame(width: 50, alignment: .leading)
+                .frame(width: 70, alignment: .leading)
             Image(systemName: weather)
                 .foregroundStyle(weatherColor1, weatherColor2)
-                .frame(width: 30)
+                .frame(width: 40)
             Text("\(low)°")
-                .frame(width: 40, alignment: .trailing)
+                .frame(width: 50, alignment: .trailing)
             TemperatureBar(low: low, high: high)
                 .frame(width: 80, height: 6)
             Text("\(high)°")
-                .frame(width: 40, alignment: .leading)
+                .frame(width: 50, alignment: .leading)
         }
         .foregroundStyle(.white)
         .bold()

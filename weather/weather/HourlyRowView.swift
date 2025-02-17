@@ -9,7 +9,12 @@ import SwiftUI
 
 struct HourlyRowView: View {
     var body: some View {
-        let weathers = ["sun.max.fill", "cloud.rain.fill", "cloud.fill", "wind", "cloud.sun.fill"]
+        let dayWeathers = ["sun.max.fill", "cloud.sun.fill", "cloud.fill", "wind"]
+        let nightWeathers = ["moon.stars.fill", "cloud.moon.fill", "cloud.moon.rain.fill"]
+        let sunriseHour = 6
+        let sunsetHour = 18
+        
+        let startHour = Int.random(in: 0...23)
             VStack {
                 HStack {
                     Image(systemName: "clock")
@@ -21,12 +26,22 @@ struct HourlyRowView: View {
                 .padding(.horizontal)
                 
                 ScrollView(.horizontal) {
-                    HStack {
+                    HStack (spacing: 15){
                         ForEach(0 ..< 24) {i in
-                            let time = i == 0 ? "Now" : formatTime(hour: i)
-                            let weather = weathers.randomElement() ?? "sun.max.fill"
-                            let temp = Int.random(in: 50...60)        
-                            HourlyForecastView(time: time, weather: weather, temp: temp)
+                            let x = (startHour + i) % 24
+                            let hour = i == 0 ? "Now" : formatTime(hour: x)
+                            let isDaytime = x >= sunriseHour && x < sunsetHour
+                            let hourInt = getHourInt(from: hour)
+
+                            let weather = isDaytime ? (dayWeathers.randomElement() ?? "sun.max.fill") : (nightWeathers.randomElement() ?? "moon.stars.fill")
+                            let temp = Int.random(in: 50...60)
+
+                            HourlyForecastView(time: hour, weather: weather, temp: temp)
+                            
+                            if isSunriseOrSunset(hour: hour) {
+                                let min = Int.random(in: 50...59)
+                                SunView(hour: hourInt, min: min, isSunrise  : hour.contains("AM"))
+                            }
                         }
                     }
                 }
@@ -49,7 +64,18 @@ struct HourlyRowView: View {
     }
     
     func formatTime(hour: Int) -> String {
-        return hour < 10 ? "0\(hour)" : "\(hour)"
+        let period = hour < 12 ? "AM" : "PM"
+        let hr = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour)
+        return "\(hr)\(period)"
+    }
+    
+    func getHourInt(from hour: String) -> Int {
+        return Int(hour.prefix(while: { $0.isNumber })) ?? 0
+    }
+
+    func isSunriseOrSunset(hour: String) -> Bool {
+        let hourInt = getHourInt(from: hour)
+        return (hourInt == 6 && hour.contains("AM")) || (hourInt == 5 && hour.contains("PM"))
     }
 }
 

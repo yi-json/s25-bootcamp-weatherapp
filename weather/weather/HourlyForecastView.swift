@@ -13,7 +13,7 @@ struct HourlyForecastView: View {
     var temp: Int
     
     var body: some View {
-        VStack (spacing: 7){
+        VStack {
             Text(time)
                 .bold()
                 .frame(height: 20)
@@ -25,7 +25,7 @@ struct HourlyForecastView: View {
                 .bold()
                 .frame(height: 20)
         }
-        .frame(width: 40)
+        .frame(width: 50)
         .foregroundStyle(.white)
     }
     
@@ -48,5 +48,5 @@ struct HourlyForecastView: View {
 }
 
 #Preview {
-    HourlyForecastView(time: "Now", weather: "sun.max.fill", temp: 69)
+    HourlyForecastView(time: "12PM", weather: "sun.max.fill", temp: 69)
 }
